@@ -1,0 +1,52 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+    // "rootDir": "./src",
+     "outDir": "./dist",
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "commonjs",
+    "target": "ES2021",
+  
+    // For nodejs:
+    // "lib": ["esnext"],
+     "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+    /*   these 3 will be needed if you want many extra file for lambda we set it to false
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+    */
+    "declaration": false,
+"declarationMap": false,
+"sourceMap": false,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+   // "verbatimModuleSyntax": true,
+   // "isolatedModules": true,
+    // "noUncheckedSideEffectImports": true,
+    // "moduleDetection": "force",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+  },
+  "include": ["src/**/*.ts"],
+"exclude": ["node_modules", "dist", "webpack.config.ts"]
+}

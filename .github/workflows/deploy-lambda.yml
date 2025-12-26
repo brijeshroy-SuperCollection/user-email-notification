@@ -1,0 +1,59 @@
+name: Deploy Lambda (Bundled) by Brijesh Roy
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'main'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout the selected branch
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      # 2️⃣ Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3️⃣ Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4️⃣ Bundle TypeScript into dist/index.js  
+      - name: Build (bundle)
+        run: |
+          npx esbuild src/index.ts \
+            --bundle \
+            --platform=node \
+            --target=node24 \
+            --outfile=dist/index.js
+      
+      # 5️⃣ Zip only the dist folder     
+      - name: Zip code
+        run: |
+          zip -r function.zip dist
+
+      # 6️⃣ Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # change if your Lambda is in another region
+
+      # 7️⃣ Deploy to Lambda
+      - name: Deploy Lambda
+        run: |
+          aws lambda update-function-code \
+            --function-name identity-registry \
+            --zip-file fileb://function.zip
