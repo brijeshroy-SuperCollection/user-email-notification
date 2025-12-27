@@ -11,11 +11,12 @@ export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:str
         to:userInfo.email,
         from:senderEmailId,
         Subject : "Welcome Mail from SuperCollection",
-        text : `Hello ${userInfo.name},
-                The Entire Super-collection Welcomes you as our ${idString}. Your userid is ${userInfo.userId}
-                Thank You
+        text: "Hello"
+        // text : `Hello ${userInfo.name},
+        //         The Entire Super-collection Welcomes you as our ${idString}. Your userid is ${userInfo.userId}
+        //         Thank You
                 
-                SuperCollection Team`
+        //         SuperCollection Team`
     }
 
     console.log("Msg payload is",JSON.stringify(emailPayload))
