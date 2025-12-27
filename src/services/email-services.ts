@@ -1,6 +1,6 @@
 import { userCreateEmailPayload } from "../helpers/create-email-payload-helper";
 import { UserDetails } from "../interfaces/sqsBody/user-creation";
-import { getSSMParam } from "./ssm-connect";
+// import { getSSMParam } from "./ssm-connect";
 import  sgMail from "@sendgrid/mail"
 
 
@@ -19,6 +19,7 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     // const senderEmailId = emailSSMConfig["/user/email-api-key"]!;
 
     const emailPayload = userCreateEmailPayload(userInfo,process.env.API_EMAIL!)
+    console.log("Sending message")
 
     sgMail.setApiKey(process.env.API_KEY!)
     sgMail
