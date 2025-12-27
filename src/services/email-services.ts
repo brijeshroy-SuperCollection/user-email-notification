@@ -18,7 +18,7 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
 //     }
     // const senderEmailId = emailSSMConfig["/user/email-api-key"]!;
 
-    const emailPayload = userCreateEmailPayload(userInfo,process.env.API_KEY!)
+    const emailPayload = userCreateEmailPayload(userInfo,process.env.API_EMAIL!)
 
     sgMail.setApiKey(process.env.API_KEY!)
     try{
