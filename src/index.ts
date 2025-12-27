@@ -1,5 +1,5 @@
 import {SQSEvent} from "aws-lambda"
-import { SendEmailCommand } from "@aws-sdk/client-ses"
+
 import { sendUserCreationMail } from "./routes/routeHandler"
 
 export const handler = async (event:SQSEvent) =>{
