@@ -21,15 +21,23 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     const emailPayload = userCreateEmailPayload(userInfo,process.env.API_EMAIL!)
 
     sgMail.setApiKey(process.env.API_KEY!)
-    try{
-    await sgMail.send(emailPayload)
-    console.log("Email Successfully sent")
-    }
-    catch(err)
-    {
-        console.log("Error is",JSON.stringify(err))
-         throw err;
-    }
+    sgMail
+  .send(emailPayload)
+  .then(() => {
+    console.log('Email sent')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
+    // try{
+    // await sgMail.send(emailPayload)
+    // console.log("Email Successfully sent")
+    // }
+    // catch(err)
+    // {
+    //     console.log("Error is",JSON.stringify(err))
+    //      throw err;
+    // }
 
 
 
