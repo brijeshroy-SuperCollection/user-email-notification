@@ -10,8 +10,9 @@ export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:str
     const emailPayload = {
         to:userInfo.email,
         from:senderEmailId,
-        Subject : "Welcome Mail from SuperCollection",
-        text: "Hello"
+  subject: 'Sending with SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
         // text : `Hello ${userInfo.name},
         //         The Entire Super-collection Welcomes you as our ${idString}. Your userid is ${userInfo.userId}
         //         Thank You
