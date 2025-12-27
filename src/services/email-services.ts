@@ -7,8 +7,15 @@ import  sgMail from "@sendgrid/mail"
 export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
 
     const ssmParamArr = ["/user/email-api-key","/user/master-email"]
-
-    const emailSSMConfig = await  getSSMParam("email" ,ssmParamArr);
+    let emailSSMConfig : any;
+    try{
+ emailSSMConfig = await  getSSMParam("email" ,ssmParamArr);
+    }
+    catch(err)
+    {
+        console.log("Error is", JSON.stringify(err))
+        throw err;
+    }
     const senderEmailId = emailSSMConfig["/user/email-api-key"]!;
 
     const emailPayload = userCreateEmailPayload(userInfo,senderEmailId)
@@ -21,7 +28,7 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     catch(err)
     {
         console.log("Error is",JSON.stringify(err))
-        // throw err;
+         throw err;
     }
 
 
