@@ -27,9 +27,17 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     await sgMail.send(emailPayload)
     console.log("Email Successfully sent")
     }
-    catch(err)
+    catch(err:any)
     {
-        console.log("Error is",JSON.stringify(err))
+         console.error("SendGrid error message:", err?.message);
+
+  if (err?.response?.body) {
+    console.error(
+      "SendGrid response body:",
+      JSON.stringify(err.response.body, null, 2)
+    );
+  }
+
          throw err;
     }
 
