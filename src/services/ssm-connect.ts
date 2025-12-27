@@ -19,7 +19,7 @@ export const getSSMParam = async (cacheKey: string, ssmParamArr: string[]) => {
       Names: ssmParamArr,
       WithDecryption: true,
     });
-
+    console.log("The SSM Param set is", JSON.stringify(ssmParamSet));
     const ssmParamRes = await ssmClient.send(ssmParamSet);
     console.log(`The Received SSMParam is ${JSON.stringify(ssmParamRes)}`);
 
