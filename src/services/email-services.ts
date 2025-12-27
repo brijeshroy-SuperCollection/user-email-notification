@@ -21,7 +21,7 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     catch(err)
     {
         console.log("Error is",JSON.stringify(err))
-        throw err;
+        // throw err;
     }
 
 
