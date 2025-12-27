@@ -1,4 +1,3 @@
-
 import { SSMClient, GetParametersCommand } from "@aws-sdk/client-ssm";
 
 
@@ -7,16 +6,17 @@ let cachedSSMConfig: Record<string, Record<string, string>> | null = {};
 const ssmClient = new SSMClient({ region: process.env.AWS_REGION! });
 
 export const getSSMParam = async (cacheKey: string, ssmParamArr: string[]) => {
-  if (cachedSSMConfig[cacheKey]) {
-    console.log("SSM config exists", JSON.stringify(cachedSSMConfig[cacheKey]));
-    return cachedSSMConfig[cacheKey];
-  }
+  //  if (cachedSSMConfig.cacheKey) {
+  //   console.log("SSM confiog exists", JSON.stringify(cachedSSMConfig.cacheKey));
+  //   return cachedSSMConfig.cacheKey;
+  // }
 
   console.log("Creating New CachedSSMConfig");
-
+  console.log("SSM Parameter keys are \n",ssmParamArr);
   try {
+      const paramArray = ssmParamArr;
     const ssmParamSet = new GetParametersCommand({
-      Names: ssmParamArr,
+      Names: paramArray,
       WithDecryption: true,
     });
     console.log("The SSM Param set is", JSON.stringify(ssmParamSet));
