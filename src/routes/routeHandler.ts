@@ -6,9 +6,15 @@ export const sendUserCreationMail = async ( userInfo : UserDetails) =>{
     console.log("Payload is \n",JSON.stringify(userInfo))
 
     validateUserDetailsPayload(userInfo)
-
-    sendUserCreateEmailServices(userInfo)
-
+     try{
+    await  sendUserCreateEmailServices(userInfo)
+     }
+     catch(err)
+     {
+        console.log("Email Sending Failed")
+        throw err ;
+     }
+console.log("Email Sent Successfully")
     
 
 }
