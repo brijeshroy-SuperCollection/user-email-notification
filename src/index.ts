@@ -1,36 +1,30 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import{ RouteHandler }from "./routes/routeHandler"
+import {SQSEvent} from "aws-lambda"
+import { SendEmailCommand } from "@aws-sdk/client-ses"
+import { sendUserCreationMail } from "./routes/routeHandler"
 
-export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-  let statusCode = 404;
-  let Res : any= { message: "Route not found Here,Please retry" }
-  try {
-   const routehandler = new RouteHandler();
-    console.log("Entered in lambda");
-    if(event.path.includes("createUser") && event.httpMethod === "POST")
-      Res =await  routehandler.userCreate(event)
-
-
-       
+export const handler = async (event:SQSEvent) =>{
+    console.log("Email Processing Lambda started")
+    console.log("Lambda is \n",JSON.stringify(event))
+    let count = 0
+    for(const record of event.Records){
+        console.log(`Record ${count} \n ${JSON.stringify(record)}`)
+        const mainBody = JSON.parse(record.body)
+        const useCase = mainBody.eventType
      
+        try{
+        switch(useCase){
+            case  "USER_CREATED" :
+            await  sendUserCreationMail(mainBody)
+            break;
 
-  
-  } catch (error: unknown) {
-    console.log(`Error is ${error}`)
-    statusCode = 400
-      let errMsg = "Unknown"
-    if (error instanceof Error)
-      errMsg = error.message
-    Res = {
-    statusCode : 400,
-    body : JSON.stringify({
-      message:"Process failed",
-      error : errMsg
-    })
+            default : 
+            console.log("Action not configured")
+        }
     }
- 
-  }
-     return Res;
-};
+    catch(err)
+    {
+        console.log(` ${useCase} notificatiom Process failed`)
+        throw err ;
+    }
+    }
+}
