@@ -1,27 +1,27 @@
 import { userCreateEmailPayload } from "../helpers/create-email-payload-helper";
 import { UserDetails } from "../interfaces/sqsBody/user-creation";
-// // import { getSSMParam } from "./ssm-connect";
+import { getSSMParam } from "./ssm-connect";
 import  sgMail from "@sendgrid/mail"
 
 
 export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
 
-//     const ssmParamArr = ["/user/email-api-key","/user/master-email"]
-//     let emailSSMConfig : any;
-//     try{
-//  emailSSMConfig = await  getSSMParam("email" ,ssmParamArr);
-//     }
-//     catch(err)
-//     {
-//         console.log("Error is", JSON.stringify(err))
-//         throw err;
-//     }
-    // const senderEmailId = emailSSMConfig["/user/email-api-key"]!;
+    const ssmParamArr = ["/user/email-api-key","/user/master-email"]
+    let emailSSMConfig : any;
+    try{
+ emailSSMConfig = await  getSSMParam("email" ,ssmParamArr);
+    }
+    catch(err)
+    {
+        console.log("Error is", JSON.stringify(err))
+        throw err;
+    }
+    const senderEmailId = emailSSMConfig["/user/master-email"];
 
-    const emailPayload = userCreateEmailPayload(userInfo,process.env.API_EMAIL!)
+    const emailPayload = userCreateEmailPayload(userInfo,senderEmailId)
     console.log("Sending message")
 
-    sgMail.setApiKey(process.env.API_KEY!)
+    sgMail.setApiKey(emailSSMConfig["/user/email-api-key"])
   
     try{
            console.log("Sending message")
@@ -29,16 +29,16 @@ export const sendUserCreateEmailServices = async  (userInfo : UserDetails)=>{
     console.log("Email Successfully sent",JSON.stringify(response))
     }
    catch (err: any) {
-    console.error("SENDGRID ERROR MESSAGE >>>", err?.message);
-    console.error("SENDGRID ERROR STACK >>>", err?.stack);
+    console.error("ERROR MESSAGE >>>", err?.message);
+    console.error("ERROR STACK >>>", err?.stack);
 
     if (err?.response) {
       console.error(
-        "SENDGRID RESPONSE STATUS >>>",
+        "RESPONSE STATUS >>>",
         err.response.statusCode
       );
       console.error(
-        "SENDGRID RESPONSE BODY >>>",
+        "RESPONSE BODY >>>",
         JSON.stringify(err.response.body, null, 2)
       );
     }

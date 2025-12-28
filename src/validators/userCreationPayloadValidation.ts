@@ -8,7 +8,7 @@ export const validateUserDetailsPayload = (userInfo: UserDetails) => {
 
 
     if (error) {
-        console.log("error is \n",JSON.stringify(error))
+        console.log("error is \n", JSON.stringify(error))
         throw new Error(JSON.stringify(error.details))
     }
 
