@@ -5,7 +5,7 @@ export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:str
     console.log("Details are :- ",(userInfo));
     console.log("Sender emailid is",senderEmailId)
 
-     const idString = userInfo.category !== 'CUSTONMER' ? `a member of our ${userInfo.category} team` : "estemeed customer."
+     const idString = userInfo.category !== 'CUSTOMER' ? `a member of our ${userInfo.category} team` : "our estemeed customer."
 
     const emailPayload = {
         to:userInfo.email,
@@ -14,10 +14,11 @@ export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:str
 //   text: 'and easy to do anywhere, even with Node.js',
 //   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
         text : `Hello ${userInfo.name},
-                The Entire Super-collection Welcomes you as our ${idString}. Your userid is ${userInfo.userId}
-                Thank You
+
+        The Entire Super-collection Welcomes you as  ${idString}. Your userid is ${userInfo.userId}
+        Thank You
                 
-                SuperCollection Team`
+        SuperCollection Team`
     }
 
     console.log("Msg payload is",JSON.stringify(emailPayload))
