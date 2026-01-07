@@ -1,11 +1,11 @@
 import { UserDetails } from "../interfaces/sqsBody/user-creation";
 
-export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:string) =>{
+export const userCreateEmailPayload = ( userInfo : UserDetails,senderEmailId:string) => {
     console.log("Creating email Payload for user creation process")
     console.log("Details are :- ",(userInfo));
     console.log("Sender emailid is",senderEmailId)
 
-     const idString = userInfo.category !== 'CUSTOMER' ? `a member of our ${userInfo.category} team` : "our estemeed customer."
+     const idString = userInfo.category !== 'CUSTOMER' ? `a member of our ${userInfo.category} team` : "our estemeed customer"
 
     const emailPayload = {
         to:userInfo.email,
